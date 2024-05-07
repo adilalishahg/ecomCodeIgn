@@ -376,45 +376,31 @@
                             </li>
 
                             <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="uim uim-comment-message"></i>
-                                    <span>Apps</span>
+								<a href="category" class="waves-effect">
+                                    <i class="uim uim-airplay"></i> 
+                                    <span>Category</span>
                                 </a>
-                                <ul class="sub-menu" aria-expanded="true">
-                                    <li>
-                                        <a href="javascript: void(0);" class="has-arrow">Email</a>
-                                        <ul class="sub-menu" aria-expanded="false">
-                                            <li><a href="email-inbox.html">Inbox</a></li>
-                                            <li><a href="email-read.html">Read Email</a></li>
-                                        </ul>
-                                    </li>
-
-                                    <li><a href="calendar.html">Calendar</a></li>
-
-                                    <li><a href="apps-chat.html">Chat</a></li>
-
-                                    <li><a href="apps-file-manager.html">File Manager</a></li>
-
-
-                                    <li>
-                                        <a href="javascript: void(0);" class="has-arrow">Invoice</a>
-                                        <ul class="sub-menu" aria-expanded="false">
-                                            <li><a href="invoices.html">Invoices</a></li>
-                                            <li><a href="invoice-detail.html">Invoice Detail</a></li>
-                                        </ul>
-                                    </li>
-
-                                    <li>
-                                        <a href="javascript: void(0);" class="has-arrow">Users</a>
-                                        <ul class="sub-menu" aria-expanded="false">
-                                            <li><a href="users-list.html">Users List</a></li>
-                                            <li><a href="users-detail.html">Users Detail</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                            </li>
+                            <li>
+								<a href="settings/pincode" class="waves-effect">
+                                    <i class="uim uim-airplay"></i> 
+                                    <span>Pincode</span>
+                                </a> 
+                            </li>
+                            <li>
+								<a href="settings/banner" class="waves-effect">
+                                    <i class="uim uim-airplay"></i> 
+                                    <span>Banner</span>
+                                </a> 
+                            </li>
+                            <li>
+								<a href="product" class="waves-effect">
+                                    <i class="uim uim-airplay"></i> 
+                                    <span>Product</span>
+                                </a> 
                             </li>
                
-
+ <!--
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="uim uim-window-grid"></i>
@@ -610,7 +596,7 @@
                                         </ul>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> -->
 
                         </ul>
 
