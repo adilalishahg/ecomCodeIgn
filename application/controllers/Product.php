@@ -55,7 +55,7 @@ class Product extends CI_Controller {
 			$this->load->view('product',$data); 
 		} else { 
 			$post= $this->input->post(); 
-			$config = array('upload_path' => "./assets/images/uploads",
+			$config = array('upload_path' => "./assets_front/images/products",
 							'allowed_types' => "gif|jpg|png|jpeg");
 			$this->load->library('upload', $config);
 			if($this->upload->do_upload('pro_main_image')){

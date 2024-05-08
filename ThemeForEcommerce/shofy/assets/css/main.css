@@ -17115,6 +17115,14 @@ product all slider
   line-height: 1;
   padding: 4px 12px;
 }
+.tp-product-details-out-stock span {
+  display: inline-block;
+  font-size: 15px;
+  color: var(--tp-theme-secondary);
+  background-color: rgba(9, 137, 255, 0.06);
+  line-height: 1;
+  padding: 4px 12px;
+}
 .tp-product-details-rating {
   margin-right: 11px;
   display: -webkit-box;

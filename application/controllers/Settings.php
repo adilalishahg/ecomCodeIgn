@@ -61,7 +61,7 @@ class Settings extends CI_Controller {
 			$this->load->view('banner'); 
 		} else { 
 			$post= $this->input->post();
-			$config = array('upload_path' => "./assets/images/uploads",
+			$config = array('upload_path' => "./assets_front/img/banner",
 							'allowed_types' => "gif|jpg|png|jpeg");
 			$this->load->library('upload', $config);
 			if($this->upload->do_upload('banner_image')){

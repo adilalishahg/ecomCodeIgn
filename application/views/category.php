@@ -40,7 +40,7 @@
 							<a href="javascript: void(0);" class="btn btn-primary waves-effect waves-light btn-sm">View More <i class="mdi mdi-arrow-right ms-1"></i></a>
 						</div>
 						<div class="card-body"> 
-							<?= form_open();?>                                           
+							<?= form_open_multipart();?>                                           
 							                                        
 								<div class="row">
 									<div class="col-md-6">
@@ -73,6 +73,14 @@
 											</select>
 											<label for="floatingSelectGrid">Status</label>
 											<?= form_error('status'); ?>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-floating mb-3">
+										<input type="file" class="form-control" name='cat_image' id=""  placeholder="Enter Your First Name">
+
+										<label for="floatingSelectGrid">Product Image</label>
+										<?= form_error('cat_image'); ?>
 										</div>
 									</div>
 								<div>

@@ -6909,6 +6909,7 @@ body .ui-tooltip {
   opacity: 0;
   /* left right */
 }
+
 .tp-header-side-menu ul li .mega-menu .home-menu {
   padding: 20px 20px 0;
 }
@@ -17112,6 +17113,15 @@ product all slider
   font-size: 15px;
   color: var(--tp-theme-primary);
   background-color: rgba(9, 137, 255, 0.06);
+  line-height: 1;
+  padding: 4px 12px;
+}
+
+.tp-product-details-out-stock span {
+  display: inline-block;
+  font-size: 15px;
+  color:  var(--tp-common-white);
+  background-color: var(--tp-theme-brown);
   line-height: 1;
   padding: 4px 12px;
 }

@@ -37,6 +37,17 @@ class Category extends CI_Controller {
 			$this->load->view('category',$data); 
 		} else { 
 			$post= $this->input->post();
+			$config = array('upload_path' => "./assets_front/images/category",
+							'allowed_types' => "gif|jpg|png|jpeg");
+			$this->load->library('upload', $config);
+			if($this->upload->do_upload('cat_image')){
+				$data = $this->upload->data();  
+				$post['cat_image'] = $data['raw_name'].$data['file_ext'];
+			}else{
+				$error = $this->upload->display_errors();
+				log_message('error', $error); // Log the error message
+				echo $error; // Display the error message
+			}
 			$check = $this->CategoryModel->add_category($post);
 			if($check){
 				$this->session->set_flashdata('success','Category Added Successfully');

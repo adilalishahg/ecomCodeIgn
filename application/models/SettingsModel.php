@@ -14,7 +14,7 @@ class SettingsModel extends CI_Model
 		$post['added_on'] = date('Y-m-d');
 		$post['banner_id'] = mt_rand(1111,9999);
 		try {  
-			$q = $this->db->insert('ec_banner',$post); 
+			$q = $this->db->insert('ec_banner',$post);  
 	
 			if($q) {
 				return true;
