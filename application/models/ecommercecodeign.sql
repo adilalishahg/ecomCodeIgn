@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2024 at 01:12 AM
+-- Generation Time: May 08, 2024 at 02:07 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -151,6 +151,16 @@ CREATE TABLE `ec_product` (
   `selling_price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `ec_product`
+--
+
+INSERT INTO `ec_product` (`id`, `prod_id`, `category`, `sub_category`, `status`, `pro_name`, `brand`, `featured`, `description`, `meta_title`, `meta_keywords`, `meta_desc`, `highlights`, `pro_main_image`, `gallery_image`, `sold`, `slug`, `ip`, `added_on`, `updated_on`, `created_at`, `updated_at`, `stock`, `mrp`, `selling_price`) VALUES
+(1, 6682, 7703, 5725, 1, 'asd', 'asd', '1', 0x617364, '12', '12', '12', 'asd', 'van3.png', NULL, NULL, NULL, NULL, '08 May, 2024', NULL, NULL, NULL, 12, 12, 12),
+(2, 6682, 7703, 5725, 1, 'asd', 'asd', '1', 0x617364, '12', '12', '12', 'asd', 'van4.png', NULL, NULL, 'asd', NULL, '08 May, 2024', NULL, NULL, NULL, 12, 12, 12),
+(3, 6682, 7703, 5725, 1, 'asd', 'asd', '1', 0x617364, '12', '12', '12', 'asd', 'van5.png', NULL, NULL, 'asd', NULL, '08 May, 2024', NULL, NULL, NULL, 12, 12, 12),
+(4, 6682, 7703, 5725, 1, 'asd', 'asd', '1', 0x617364, '12', '12', '12', 'asd', 'van6.png', NULL, NULL, 'asd', NULL, '08 May, 2024', NULL, NULL, NULL, 12, 12, 12);
+
 -- --------------------------------------------------------
 
 --
@@ -243,7 +253,7 @@ ALTER TABLE `ec_pincode`
 -- AUTO_INCREMENT for table `ec_product`
 --
 ALTER TABLE `ec_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `ec_users`

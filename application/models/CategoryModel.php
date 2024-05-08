@@ -38,7 +38,7 @@ class CategoryModel extends CI_Model
 		if($q->num_rows()){
 			return $q->result();
 		}
-	} 
+	}  	
 	
     // public function getCategory()
     // {

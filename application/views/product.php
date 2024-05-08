@@ -1,3 +1,4 @@
+ 
 <!doctype html>
 <html lang="en">
 <!-- Mirrored from themesdesign.in/tocly/layouts/5.3.1/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Nov 2023 08:52:23 GMT -->
@@ -40,12 +41,12 @@
 							<a href="javascript: void(0);" class="btn btn-primary waves-effect waves-light btn-sm">View More <i class="mdi mdi-arrow-right ms-1"></i></a>
 						</div>
 						<div class="card-body"> 
-							<?= form_open();?>                                           
+							<?= form_open_multipart();?>                                           
 							                                        
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-floating mb-3">
-											<input type="number" value="" class="form-control" name='prod_id' id=""  placeholder="Enter Your Product ID">
+											<input type="number" readonly value="<?= set_value('prod_id',$prod_id) ?>" class="form-control" name='prod_id' id=""  placeholder="Enter Your Product ID">
 											<label for="floatingFirstnameInput">Product ID</label>
 											<?= form_error('prod_id'); ?>
 										</div>

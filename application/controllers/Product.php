@@ -8,6 +8,7 @@ class Product extends CI_Controller {
         // Your initialization tasks or setup operations go here
         // For example, loading libraries, models, helpers, etc.
         $this->load->library('form_validation');
+        $this->load->model('CategoryModel');
         $this->load->model('ProductModel');
     }
 	/**
@@ -26,11 +27,9 @@ class Product extends CI_Controller {
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 */
 	public function index()
-	{
-		 
-
-		$this->form_validation->set_rules('prod_id', 'product id', 'required|trim');
+	{	$this->form_validation->set_rules('prod_id', 'product id', 'required|trim');
 		$this->form_validation->set_rules('pro_name', 'product name', 'required|trim');
+		$this->form_validation->set_rules('category', 'product category', 'required|trim');
 		$this->form_validation->set_rules('brand', 'brand', 'required|trim');
 		$this->form_validation->set_rules('featured', 'featured', 'required|trim');
 		$this->form_validation->set_rules('highlights', 'highlights', 'required|trim');
@@ -45,11 +44,30 @@ class Product extends CI_Controller {
 		$this->form_validation->set_rules('status', 'status', 'required|trim');
 		if ($this->form_validation->run() == FALSE) {
 			
-			$data['categories'] = $this->ProductModel->all_category();
+			$data['categories'] = $this->CategoryModel->all_category();
+			if($this->session->userdata('prod_id')!=''){
+				$prod_id = $this->session->userdata('prod_id');
+			}else{
+				$prod_id=mt_rand(1111,9999);
+				$this->session->set_userdata('prod_id',$prod_id);
+			}
+			$data['prod_id'] = $prod_id; 
 			$this->load->view('product',$data); 
 		} else { 
-			$post= $this->input->post();
-			$check = $this->ProductModel->add_product($post);
+			$post= $this->input->post(); 
+			$config = array('upload_path' => "./assets/images/uploads",
+							'allowed_types' => "gif|jpg|png|jpeg");
+			$this->load->library('upload', $config);
+			if($this->upload->do_upload('pro_main_image')){
+				$data = $this->upload->data();  
+				$post['pro_main_image'] = $data['raw_name'].$data['file_ext'];
+			}else{
+				$error = $this->upload->display_errors();
+				log_message('error', $error); // Log the error message
+				echo $error; // Display the error message
+			}
+			// print_r($post);exit;
+			$check = $this->ProductModel->add_product($post); 
 			if($check){
 				$this->session->set_flashdata('success','Product Added Successfully');
 				
@@ -57,7 +75,7 @@ class Product extends CI_Controller {
 			else{
 				$this->session->set_flashdata('error','Something went wrong');
 				 
-			}
+			} 
 			redirect('product');
 		} 
 	}

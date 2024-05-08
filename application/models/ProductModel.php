@@ -10,13 +10,14 @@ class ProductModel extends CI_Model
         parent::__construct();
         $this->load->database();
     }
-	public function add_category($post){
+	public function add_product($post){
 		try {
-			$post['added_on'] = date('d M, Y');
-			$post['cate_id'] = mt_rand(1111,9999);
-			$q = $this->db->insert('ec_category',$post); 
+			$post['added_on'] = date('d M, Y'); 
+			$post['slug'] =$this->generate_slug($post['pro_name']); 
+			$q = $this->db->insert('ec_product',$post); 
 	
 			if($q) {
+				$this->session->unset_userdata('prod_id');
 				return true;
 			} else {
 				return false;
@@ -27,22 +28,24 @@ class ProductModel extends CI_Model
 			return false; // Return false indicating failure
 		}
 	}
-	public function all_category(){
-		$q = $this->db->where(['status'=>1,"parent_id"=>''])->get('ec_category');
-		if($q->num_rows()){
-			return $q->result();
-		}
-	}	
+	function generate_slug($string) {
+		// Convert the string to lowercase
+		$slug = strtolower($string);
+		
+		// Replace spaces with dashes
+		$slug = str_replace(' ', '-', $slug);
+		
+		// Remove special characters
+		$slug = preg_replace('/[^A-Za-z0-9\-]/', '', $slug);
+		
+		// Remove consecutive dashes
+		$slug = preg_replace('/-+/', '-', $slug);
+		
+		// Trim dashes from the beginning and end of the string
+		$slug = trim($slug, '-');
+		
+		return $slug;
+	}
 	
-    // public function getCategory()
-    // {
-    //     $query = $this->db->get('category');
-    //     return $query->result_array();
-    // }
-
-    // public function getCategoryById($id)
-    // {
-    //     $query = $this->db->get_where('category', array('id' => $id));
-    //     return $query->row_array();
-    // }
+	 
 }
