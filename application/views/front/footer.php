@@ -119,7 +119,8 @@
             </div>
          </div>
       </footer>
-	<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets_front/js/vendor/jquery.js"></script>
+	<!-- <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets_front/js/vendor/jquery.js"></script> -->
+	<script src="assets_front/js/vendor/jquery.js"></script>
 	<script src="assets_front/js/vendor/waypoints.js"></script>
 	<script src="assets_front/js/bootstrap-bundle.js"></script>
 	<script src="assets_front/js/meanmenu.js"></script>
@@ -135,3 +136,78 @@
 	<script src="assets_front/js/imagesloaded-pkgd.js"></script>
 	<script src="assets_front/js/ajax-form.js"></script>
 	<script src="assets_front/js/main.js"></script>
+	<script>
+		
+$(function() {
+
+// Get the form.
+var form = $('#add_cart-form');
+
+// // Get the messages div.
+var formMessages = $('.alert'); 
+$(formMessages).text('');
+// Set up an event listener for the contact form.
+$(form).submit(function(e) {
+	// Stop the browser from submitting the form.
+	e.preventDefault();
+
+	// Serialize the form data.
+	var formData = $(form).serialize();
+
+	// Submit the form using AJAX.
+	$.ajax({
+		type: 'POST',
+		url: $(form).attr('action'),
+		data: formData
+	})
+	.done(function(response) {
+		let res = (JSON.parse(response));
+		// Make sure that the formMessages div has the 'success' class.
+		if(res.status){
+			$(formMessages).removeClass('alert-danger');
+			$(formMessages).addClass('alert-success');
+
+		}else{
+			$(formMessages).removeClass('alert-success');
+			$(formMessages).addClass('alert-danger');
+
+		}
+
+		// Set the message text.
+		$(formMessages).text(res.msg);
+
+		// Clear the form.
+		// $('#contact-form input,#contact-form textarea').val('');
+	})
+	.fail(function(data) {
+		let res = (JSON.parse(data));
+		// Make sure that the formMessages div has the 'error' class.
+		$(formMessages).removeClass('alert-success');
+		$(formMessages).addClass('alert-error');
+		// formMessages.text('test')
+		// Set the message text.
+		if (res.responseText !== '') {
+			$(formMessages).text(res.msg);
+		} else {
+			$(formMessages).text('Oops! An error occured and your message could not be sent.');
+		}
+
+	});
+	
+	// formMessages.show();
+	formMessages.fadeIn();
+	
+	// Hide the alert after 5 seconds
+	setTimeout(function() {
+		(formMessages).removeClass('alert-success');
+		(formMessages).removeClass('alert-danger');
+		formMessages.fadeOut();
+		// formMessages.hide();
+		(formMessages).text('');
+
+	}, 5000);
+});
+
+}); 
+
+	</script>

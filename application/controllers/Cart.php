@@ -12,10 +12,25 @@ class Cart extends CI_Controller {
     }
 	public function index()
 	{ 
+		$data['cart']=$this->CartModel->get_cart();
+		// echo "<pre/>";print_r($data);exit;  
+		$this->load->view('front/cart',$data);
 	} 
-	public function add_to_cat(){
+	public function add_to_cart(){
 		$post = $this->input->post();
-		$this->CartModel->add_to_cart($post); 
+		$check = $this->CartModel->add_to_cart($post);
+		if($check){
+			$msg = 'Product added to cart successfully';
+			$msg_type = 'success';
+			$this->session->set_flashdata($msg_type,$msg);
+		}else{
+			$msg = 'Product already added to cart successfully';
+			$msg_type = 'error';
+			$this->session->set_flashdata($msg_type,$msg);
+		} 
+		echo json_encode(['msg'=>$msg,'status'=>$check,'msg_type'=>$msg_type]);
+		return;
+		// redirect('cart');
 	}
 	 
 

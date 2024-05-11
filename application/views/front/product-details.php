@@ -41,6 +41,7 @@
 <!-- breadcrumb area end -->
 
 <!-- product details area start -->
+<div class="alert  alert-dismissible" role="alert"></div>
 <section class="tp-product-details-area">
    <div class="tp-product-details-top pb-115">
 	  <div class="container">
@@ -120,7 +121,7 @@
  
 
 				  <!-- actions -->
-				  <?=form_open('cart/add-to-cart');?>
+				  <?=form_open('cart/add_to_cart', array('id' => 'add_cart-form','class' => 'add_cart-form'));?>
 				  <div class="tp-product-details-action-wrapper">
 					 <h3 class="tp-product-details-action-title">Quantity</h3>
 					 <div class="tp-product-details-action-item-wrapper d-flex align-items-center">

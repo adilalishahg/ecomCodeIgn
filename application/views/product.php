@@ -34,6 +34,7 @@
 				</div>
 			<?php }?>
 			<div class="row">
+				<div class="ajax-response"></div>
 				<div class="col-xl-12">
 					<div class="card">
 						<div class="card-header border-0 align-items-center d-flex pb-0">
