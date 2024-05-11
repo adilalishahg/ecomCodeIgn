@@ -209,5 +209,53 @@ $(form).submit(function(e) {
 });
 
 }); 
+function calculate_total_price() {
+    let total = 0;
+    // Iterate over each table row
+    $('#cart_table tr').each(function() {
+        // Find the input within the current row and retrieve the data attributes
+        var cartItemPrice = parseFloat($(this).find('input[data-cart_item_price]').data('cart_item_price'));
+        var qty = parseFloat($(this).find('input[data-id]').val() || 0);
+        total += cartItemPrice * qty;
+    });
+	 console.log(total)
+    // Output the total price
+    $('#data-cart_mini_total').html(total.toFixed(2));
+    $('.tp-cart-checkout-top-price_all').html(total.toFixed(2));
+	 
+}
+
+// Calculate total price initially
+
+// Update total price when quantity changes
+$('.tp-cart-plus').on('click', function() {
+calculate_total_price();
+    var dataId = $(this).siblings('.tp-cart-input').data('id');
+    var data_price = parseFloat($(this).siblings('.tp-cart-input').data('cart_item_price'));
+    var qty = parseFloat($('input[data-id="'+dataId+'"]').val() || 0);
+    var old_total = parseFloat($("#data-cart_mini_total").html() || 0);
+
+    // Calculate new total
+    let total =  (qty * data_price); 
+    let grand_total = old_total + total;
+
+    // Update quantity display and total price display
+    $('[data-cart_mini_qty_id="'+dataId+'"]').html("x" + qty);
+   //  $('#data-cart_mini_total').html(grand_total.toFixed(2)); 
+});
+
+$('.tp-cart-minus').on('click', function() {
+	// Logic for tp-cart-plus click event
+	var dataId = $(this).siblings('.tp-cart-input').data('id');
+	var data_price = $(this).siblings('.tp-cart-input').data('cart_item_price'); 
+	var qty = $('input[data-id="'+dataId+'"]').val();
+	var old_total = $("#data-cart_mini_total").html();
+	console.log(old_total)
+	let total =  (qty*data_price);
+	$('[data-cart_mini_qty_id="'+dataId+'"]').html("x"+qty);
+	// $('#data-cart_mini_total').html(total);
+	// Additional logic here
+});
+ 
 
 	</script>

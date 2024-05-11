@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2024 at 02:09 AM
+-- Generation Time: May 12, 2024 at 01:33 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -72,7 +72,11 @@ CREATE TABLE `ec_cart` (
 --
 
 INSERT INTO `ec_cart` (`id`, `cart_id`, `user_id`, `pro_id`, `pro_qty`, `pro_name`, `pro_price`, `slug`, `pro_image`, `added_on`, `created_at`, `updated_at`) VALUES
-(13, 9555, 3756, 9368, 1, 'asd', 12, 'asd', 'product-1.jpg', '2024-05-10', '2024-05-10 20:28:43', '2024-05-10 20:28:43');
+(13, 9555, 3756, 9368, 1, 'asd', 12, 'asd', 'product-1.jpg', '2024-05-10', '2024-05-10 20:28:43', '2024-05-10 20:28:43'),
+(17, 2580, 9764, 2206, 1, 'Ear Bud', 123, 'ear-bud', 'product-11.jpg', '2024-05-11', '2024-05-11 17:59:28', '2024-05-11 17:59:28'),
+(18, 1351, 9764, 9368, 1, 'asd', 12, 'asd', 'product-1.jpg', '2024-05-11', '2024-05-11 20:18:05', '2024-05-11 20:18:05'),
+(19, 9110, 6371, 6754, 7, 'asdtest', 11, 'asdtest', 'product-16.jpg', '2024-05-12', '2024-05-11 22:21:26', '2024-05-11 23:28:55'),
+(20, 8319, 6371, 2206, 7, 'Ear Bud', 122, 'ear-bud', 'product-11.jpg', '2024-05-12', '2024-05-11 22:21:47', '2024-05-11 23:29:05');
 
 -- --------------------------------------------------------
 
@@ -268,7 +272,7 @@ ALTER TABLE `ec_banner`
 -- AUTO_INCREMENT for table `ec_cart`
 --
 ALTER TABLE `ec_cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `ec_category`

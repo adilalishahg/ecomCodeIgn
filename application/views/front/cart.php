@@ -40,21 +40,9 @@
          <!-- cart area start -->
          <section class="tp-cart-area pb-120">
             <div class="container">
+					<?= form_open('cart/cart_update', array('id' => 'update_cart-form','class' => 'update_cart-form')); ?>
                <div class="row">
-					<?php
-						if($this->session->flashdata('success')){?>
-							<div class="alert alert-success alert-dismissible fade show" role="alert">
-								<?= $this->session->flashdata('success'); ?>
-								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-							</div>
-							<?php }?>
-							<?php
-							if($this->session->flashdata('error')){?>
-							<div class="alert alert-danger alert-dismissible fade show" role="alert">
-								<?= $this->session->flashdata('error'); ?>
-								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-							</div>
-						<?php }?>
+					 
                   <div class="col-xl-9 col-lg-8">
                      <div class="tp-cart-list mb-25 mr-30">
                         <table class="table">
@@ -66,7 +54,7 @@
                                <th></th>
                              </tr>
                            </thead>
-                           <tbody>
+                           <tbody id='cart_table'>
 										<?php 
 										if(!empty($cart)):
 
@@ -84,13 +72,13 @@
                                  <td class="tp-cart-quantity">
                                     <div class="tp-product-quantity mt-10 mb-10">
                                        <span class="tp-cart-minus">
-                                          <svg width="10" height="2" viewBox="0 0 10 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <svg width="10" class="tp-cart-minus_btn" height="2" viewBox="0 0 10 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                                              <path d="M1 1H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                           </svg>                                                             
                                        </span>
-                                       <input class="tp-cart-input" type="text" value="<?php echo $c->pro_qty; ?>">
+                                       <input class="tp-cart-input" type="text" name="up_qty[]"  data-cart_item_price="<?=$c->pro_price?>" data-id="<?= $c->pro_id; ?>" value="<?php echo $c->pro_qty; ?>">
                                        <span class="tp-cart-plus">
-                                          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <svg width="10"  class="tp-cart-plus_btn" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                              <path d="M5 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                              <path d="M1 5H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                           </svg>
@@ -99,22 +87,25 @@
                                  </td>
                                  <!-- action -->
                                  <td class="tp-cart-action">
-                                    <button class="tp-cart-action-btn">
+                                    <a class="tp-cart-action-btn" href="cart/delete_product/<?= $c->pro_id; ?>">
                                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                           <path fill-rule="evenodd" clip-rule="evenodd" d="M9.53033 1.53033C9.82322 1.23744 9.82322 0.762563 9.53033 0.46967C9.23744 0.176777 8.76256 0.176777 8.46967 0.46967L5 3.93934L1.53033 0.46967C1.23744 0.176777 0.762563 0.176777 0.46967 0.46967C0.176777 0.762563 0.176777 1.23744 0.46967 1.53033L3.93934 5L0.46967 8.46967C0.176777 8.76256 0.176777 9.23744 0.46967 9.53033C0.762563 9.82322 1.23744 9.82322 1.53033 9.53033L5 6.06066L8.46967 9.53033C8.76256 9.82322 9.23744 9.82322 9.53033 9.53033C9.82322 9.23744 9.82322 8.76256 9.53033 8.46967L6.06066 5L9.53033 1.53033Z" fill="currentColor"/>
                                        </svg>
                                        <span>Remove</span>
-                                    </button>
+                                    </a>
                                  </td>
-                              </tr> 
+										<input  type="hidden" name="up_pro_id[]" value="<?= $c->pro_id; ?>"> 
+                              </tr>
+										
 										<?php  endforeach; else: ?>
 											<tr>
-												<td class="col-span-4"><h4>No  Product in the cart</h4></td>
+												<td class="col-span-4"><h4><span class="mr-4">No  Product in the cart</span> <a href="<?= base_url()?>" class="btn btn-outline-primary btn-lg  ml-4">Show Now</a></h4></td>
 											</tr>
 										<?php endif; ?>
                            </tbody>
                          </table>
                      </div>
+							<?php if(!empty($cart)): ?>
                      <div class="tp-cart-bottom">
                         <div class="row align-items-end">
                            <div class="col-xl-4 col-md-6">
@@ -132,7 +123,7 @@
                            </div>
                            <div class="col-xl-6 col-md-4">
                               <div class="tp-cart-update text-md-end">
-                                 <button type="button" class="tp-cart-update-btn">Update Cart</button>
+                                 <button type="submit" class="tp-cart-update-btn">Update Cart</button>
                               </div>
                            </div>
                         </div>
@@ -142,36 +133,42 @@
                      <div class="tp-cart-checkout-wrapper">
                         <div class="tp-cart-checkout-top d-flex align-items-center justify-content-between">
                            <span class="tp-cart-checkout-top-title">Subtotal</span>
-                           <span class="tp-cart-checkout-top-price">$742</span>
+                           <span class="tp-cart-checkout-top-price tp-cart-checkout-top-price_all"><?= number_format($sub_total,2)?></span>
                         </div>
                         <div class="tp-cart-checkout-shipping">
                            <h4 class="tp-cart-checkout-shipping-title">Shipping</h4>
 
                            <div class="tp-cart-checkout-shipping-option-wrapper">
-                              <div class="tp-cart-checkout-shipping-option">
+                              <!-- <div class="tp-cart-checkout-shipping-option">
                                  <input id="flat_rate" type="radio" name="shipping">
                                  <label for="flat_rate">Flat rate: <span>$20.00</span></label>
                               </div>
                               <div class="tp-cart-checkout-shipping-option">
                                  <input id="local_pickup" type="radio" name="shipping">
                                  <label for="local_pickup">Local pickup: <span> $25.00</span></label>
-                              </div>
-                              <div class="tp-cart-checkout-shipping-option">
-                                 <input id="free_shipping" type="radio" name="shipping">
-                                 <label for="free_shipping">Free shipping</label>
-                              </div>
+                              </div> --> 
+										<!-- <?php print_r($cart_total); ?> -->
+										<?php if($cart_total >MIN_LIMIT_FOR_CHARGES): ?>
+                                 <p for="free_shipping">Free shipping: <del><?= number_format($cart_total_data['delivery'],2)?></del></p>
+											<?php else: ?>
+												<p for="free_shipping">   Shipping charges: <?= number_format($cart_total_data['delivery'],2)?></p>
+												<?php endif; ?>
+                               
                            </div>
                         </div>
                         <div class="tp-cart-checkout-total d-flex align-items-center justify-content-between">
                            <span>Total</span>
-                           <span>$724</span>
+                           <span class="tp-cart-checkout-top-price_all"><?= number_format($cart_total,2)?></span>
                         </div>
                         <div class="tp-cart-checkout-proceed">
                            <a href="checkout.html" class="tp-cart-checkout-btn w-100">Proceed to Checkout</a>
                         </div>
                      </div>
                   </div>
+						
+						<?php endif; ?>
                </div>
+					<?php form_close(); ?>
             </div>
          </section>
          <!-- cart area end -->

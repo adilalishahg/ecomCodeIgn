@@ -1,13 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Settings extends CI_Controller {
+class Settings extends MY_Controller {
 
      public function __construct() {
         parent::__construct();
         // Your initialization tasks or setup operations go here
-        // For example, loading libraries, models, helpers, etc.
-        $this->load->library('form_validation');
+        // For example, loading libraries, models, helpers, etc. 
         $this->load->model('SettingsModel');
     }
 	/**

@@ -202,7 +202,7 @@
              <div class="cartmini__top-wrapper">
                  <div class="cartmini__top p-relative">
                      <div class="cartmini__top-title">
-                         <h4>Shopping cart</h4>
+                         <h4>Shopping cart</h4> 
                      </div>
                      <div class="cartmini__close">
                          <button type="button" class="cartmini__close-btn cartmini-close-btn"><i class="fal fa-times"></i></button>
@@ -214,23 +214,29 @@
                      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" data-width="70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                    </div>                   
                  </div>
+					  <?php if(!empty($cart_details)):
+								
+						?>
                  <div class="cartmini__widget">
+						<?php foreach($cart_details as $cart):?>
                      <div class="cartmini__widget-item">
                          <div class="cartmini__thumb">
                            <a href="product-details.html">
-                              <img src="assets_front/img/product/product-1.jpg" alt="">
+                              <img src="assets_front/images/products/<?= $cart->pro_image ?>" alt="">
                            </a>
                          </div>
                          <div class="cartmini__content">
-                           <h5 class="cartmini__title"><a href="product-details.html">Level Bolt Smart Lock</a></h5>
+                           <h5 class="cartmini__title"><a href="product/<?= $cart->pro_id ?>"><?= $cart->pro_name ?></a></h5>
                            <div class="cartmini__price-wrapper">
-                              <span class="cartmini__price">$46.00</span>
-                              <span class="cartmini__quantity">x2</span>
+                              <span class="cartmini__price"><?= $cart->pro_price ?></span>
+                              <span class="cartmini__quantity" data-cart_mini_qty_id="<?= $cart->pro_id ?>">x<?= $cart->pro_qty ?></span>
                            </div>
                          </div>
                          <a href="#" class="cartmini__del"><i class="fa-regular fa-xmark"></i></a>
                      </div>
+							<?php endforeach;   ?>
                  </div>
+					  <?php   else: ?>
                  <!-- for wp -->
                  <!-- if no item in cart -->
                  <div class="cartmini__empty text-center d-none">
@@ -238,14 +244,15 @@
                      <p>Your Cart is empty</p>
                      <a href="shop.html" class="tp-btn">Go to Shop</a>
                  </div>
+					  <?php endif; ?>
              </div>
              <div class="cartmini__checkout">
                  <div class="cartmini__checkout-title mb-30">
                      <h4>Subtotal:</h4>
-                     <span>$113.00</span>
+                     <span  id="data-cart_mini_total" data-cart_mini_total="<?= $cart->pro_id ?>"><?= number_format($cart_total)?></span>
                  </div>
                  <div class="cartmini__checkout-btn">
-                     <a href="cart.html" class="tp-btn mb-10 w-100"> view cart</a>
+                     <a href="cart" class="tp-btn mb-10 w-100"> view cart</a>
                      <a href="checkout.html" class="tp-btn tp-btn-border w-100"> checkout</a>
                  </div>
              </div>
@@ -337,7 +344,7 @@
                   <div class="row align-items-center">
                      <div class="col-xl-2 col-lg-2 col-md-4 col-6">
                         <div class="logo">
-                           <a href="index.html">
+                           <a href="<?= base_url()?>">
                               <img src="assets_front/img/logo/logo.svg" alt="logo">
                            </a>
                         </div>
