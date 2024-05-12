@@ -228,6 +228,65 @@ function calculate_total_price() {
 // Calculate total price initially
 
 // Update total price when quantity changes
+$('.tp-cart-action-btn').on('click', function(e) {
+	e.preventDefault();
+	// Assuming your anchor tag has an id attribute 'myAnchor'
+	var hrefValue = $('.tp-cart-action-btn').attr('href');
+    var dataId = $('.tp-cart-action-btn').data('anch_cart_item_id');
+	 $.ajax({
+		type: 'POST',
+		url: hrefValue,
+		data: {id:dataId}
+	})
+	.done(function(response) {
+		let res = (JSON.parse(response));
+		// Make sure that the formMessages div has the 'success' class.
+		if(res.status){
+			$(formMessages).removeClass('alert-danger');
+			$(formMessages).addClass('alert-success');
+
+		}else{
+			$(formMessages).removeClass('alert-success');
+			$(formMessages).addClass('alert-danger');
+
+		}
+
+		// Set the message text.
+		$(formMessages).text(res.msg);
+
+		// Clear the form.
+		// $('#contact-form input,#contact-form textarea').val('');
+	})
+	.fail(function(data) {
+		let res = (JSON.parse(data));
+		// Make sure that the formMessages div has the 'error' class.
+		$(formMessages).removeClass('alert-success');
+		$(formMessages).addClass('alert-error');
+		// formMessages.text('test')
+		// Set the message text.
+		if (res.responseText !== '') {
+			$(formMessages).text(res.msg);
+		} else {
+			$(formMessages).text('Oops! An error occured and your message could not be sent.');
+		}
+
+	});
+	
+	// formMessages.show();
+	formMessages.fadeIn();
+	
+	// Hide the alert after 5 seconds
+	setTimeout(function() {
+		(formMessages).removeClass('alert-success');
+		(formMessages).removeClass('alert-danger');
+		formMessages.fadeOut();
+		// formMessages.hide();
+		(formMessages).text('');
+
+	}, 5000);
+	 console.log(dataId) 
+ 
+})
 $('.tp-cart-plus').on('click', function() {
 calculate_total_price();
     var dataId = $(this).siblings('.tp-cart-input').data('id');
@@ -245,6 +304,7 @@ calculate_total_price();
 });
 
 $('.tp-cart-minus').on('click', function() {
+	calculate_total_price();
 	// Logic for tp-cart-plus click event
 	var dataId = $(this).siblings('.tp-cart-input').data('id');
 	var data_price = $(this).siblings('.tp-cart-input').data('cart_item_price'); 

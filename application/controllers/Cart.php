@@ -47,6 +47,7 @@ class Cart extends MY_Controller {
 		return;
 	}
 	public function delete_product($pro_id){
+		// print_r($post);exit;
 		$post = $this->input->post();
 		$check = $this->CartModel->delete_product($pro_id);
 		if($check){

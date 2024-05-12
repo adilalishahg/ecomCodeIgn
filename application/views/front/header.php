@@ -249,7 +249,9 @@
              <div class="cartmini__checkout">
                  <div class="cartmini__checkout-title mb-30">
                      <h4>Subtotal:</h4>
-                     <span  id="data-cart_mini_total" data-cart_mini_total="<?= $cart->pro_id ?>"><?= number_format($cart_total)?></span>
+                    <?php if(isset($cart)&&!empty($cart)):?> 
+								<span  id="data-cart_mini_total" data-cart_mini_total="<?= $cart->pro_id ?>"><?= number_format($cart_total)?></span>
+							<?php endif; ?>
                  </div>
                  <div class="cartmini__checkout-btn">
                      <a href="cart" class="tp-btn mb-10 w-100"> view cart</a>
