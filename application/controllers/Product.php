@@ -78,4 +78,47 @@ class Product extends MY_Controller {
 			redirect('product');
 		} 
 	}
+	public function product_by_cat($slug1,$slug2=''){
+		$slug=$slug1;
+		if(!empty($slug2)){
+			$slug=$slug2;
+		} 
+		$cat_id =  $this->ProductModel->fetch_cat($slug);
+		 
+		$product =  $this->ProductModel->fetch_product($cat_id);
+		 
+		$data['product'] = $product;
+		$data['cat_id'] = $cat_id;
+		$data['slug'] = $slug1;
+		$slug2!==''?$data['slug2'] = $slug2:''; 
+		$this->load->view('front/products',$data);
+	}
+	public function all(){
+		// debug($data);
+		$data['category'] = (get_categories_all());
+		$product =  $this->ProductModel->fetch_product(); 
+		 
+		$data['product'] = $product; 
+		// debug($data);exit;
+		$this->load->view('front/products-2',$data);
+	}
+	public function search(){
+		$params = ($this->input->get());
+		$search_array= [];
+		if(isset($params['search_item'])&&!empty($params['search_item'])){
+			$search_array['pro_name'] =  $params['search_item']; 
+		}
+		if(isset($params['category'])&&!empty($params['category'])){
+			$search_array['category'] =$search_array['sub_category'] =  $params['category']; 
+		}
+		if(empty($search_array)){
+			redirect('products/all');
+		}else{
+			$search_array['product'] = $this->ProductModel->fetch_product_search($search_array);
+			$this->load->view('front/products',$search_array);
+		// debug($product);
+		}
+
+		// print_r($search_array);exit;
+	}
 }

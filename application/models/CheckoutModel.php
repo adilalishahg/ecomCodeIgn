@@ -3,7 +3,7 @@ defined("BASEPATH") OR exit("No direct script allowed");
 
 
 
-class CartModel extends CI_Model
+class CheckoutModel extends CI_Model
 { 
 
     public function __construct() {
@@ -11,10 +11,12 @@ class CartModel extends CI_Model
 		
         $this->load->database();
     }
-	
+	public function get_userid(){
+		return   $this->session->userdata('user_id');
+	}
 	public function get_cart(){
 		 
-		$exist = $this->db->where(array('user_id'=>get_userid($this->session),'status'=>1))->get('ec_cart');
+		$exist = $this->db->where(array('user_id'=>$this->get_userid()))->get('ec_cart');
 		if($exist->num_rows()){
 			return $exist->result();
 		}else{
@@ -23,17 +25,9 @@ class CartModel extends CI_Model
 	}
 	public function add_to_cart($post){ 
 		$user_id = $this->session->userdata('user_id');
-		$exist = $this->db->where(array('user_id'=>get_userid($this->session),'pro_id'=>$post['pro_id'],'status'=>1))->get('ec_cart');
+		$exist = $this->db->where(array('user_id'=>$this->get_userid(),'pro_id'=>$post['pro_id']))->get('ec_cart');
 		if($exist->num_rows()){
-		    // return false;
-			$quantity =1;
-			if(isset($post['prod_qty'])){
-				$quantity = $post['prod_qty'];
-			}
-			$cart_already_product = $exist->row();
-			$data['pro_qty'] = $cart_already_product->pro_qty + $quantity;
-			$q = $this->db->where(["pro_id" => $cart_already_product->pro_id, "user_id" =>$cart_already_product->user_id])->update('ec_cart', ['pro_qty' => $data['pro_qty']]);
-			return true;
+		    return false;
 		}else{
 			$q = $this->db->select('pro_name,selling_price,mrp,slug,pro_main_image')->where('prod_id',$post['pro_id'])->get('ec_product');
 			if($q->num_rows()){
@@ -59,13 +53,13 @@ class CartModel extends CI_Model
 	public function cart_update($post){ 
 		// debug($post); 
 		foreach ($post['up_pro_id'] as $key => $value) { 
-			$q = $this->db->where(["pro_id" => $value, "user_id" => get_userid($this->session)])->update('ec_cart', ['pro_qty' => $post['up_qty'][$key]]);
+			$q = $this->db->where(["pro_id" => $value, "user_id" => $this->get_userid()])->update('ec_cart', ['pro_qty' => $post['up_qty'][$key]]);
 			// print_r($this->db->last_query());
 		}
 		return true;
 	}
 	public function delete_product($id){
-		$q = $this->db->where(["pro_id" => $id, "user_id" => get_userid($this->session)])->delete('ec_cart');
+		$q = $this->db->where(["pro_id" => $id, "user_id" => $this->get_userid()])->delete('ec_cart');
 		if($q){
 			return true;
 		}
@@ -73,16 +67,15 @@ class CartModel extends CI_Model
 	}
 	public function cart_total(){
 		$res = false;
-		$q = $this->db->select('pro_price as total_price,pro_qty as total_item')->where(['user_id'=>get_userid($this->session)])->get('ec_cart');
+		$q = $this->db->select('pro_price as total_price,pro_qty as total_item')->where(['user_id'=>$this->get_userid()])->get('ec_cart');
 		if($q->num_rows()){
-			
-			$result = ( $q->result()); 
-			$total_charges =$total_item= 0;
+			$result = ( $q->result());
+			$total_charges = 0;
 			foreach ($result as $res) {
 				// print_r($res);exit;
 				$total = $res->total_price; 
-				$total_item += $res->total_item; 
-				$total_charges += $res->total_item*$total; 
+				$total_item = $res->total_item; 
+				$total_charges += $total_item*$total; 
 				
 			}
 			if($total>MIN_LIMIT_FOR_CHARGES){
@@ -92,10 +85,41 @@ class CartModel extends CI_Model
 			}
 			 
 
-		}   
+		}  
+		// debug($res);
 		return $res;
 		 
 	}
+
+	public function checkOut_person_Detail($user){
+		
+		if($this->db->insert('ec_users',$user))
+		{
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public function create_order($order){
+		
+		if($this->db->insert('ec_order',$order))
+		{
+			return true;
+			 
+		}else{
+			return false;
+		}
+	}
+	public function cart_order_update($cart,$status){
+		foreach ($cart  as $value) { 
+			// debug($value);
+
+				$q = $this->db->where(["pro_id" => $value->pro_id, "user_id" => $value->user_id, "cart_id" => $value->cart_id])->update('ec_cart', ['status' => $status]);
+				// print_r($this->db->last_query());
+			}
+		return true;
+	}
+ 
 	
 	 
 }

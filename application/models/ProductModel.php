@@ -13,7 +13,7 @@ class ProductModel extends CI_Model
 	public function add_product($post){
 		try {
 			$post['added_on'] = date('d M, Y'); 
-			$post['slug'] =$this->generate_slug($post['pro_name']); 
+			$post['slug'] =generate_slug($post['pro_name']); 
 			$q = $this->db->insert('ec_product',$post); 
 	
 			if($q) {
@@ -28,24 +28,46 @@ class ProductModel extends CI_Model
 			return false; // Return false indicating failure
 		}
 	}
-	function generate_slug($string) {
-		// Convert the string to lowercase
-		$slug = strtolower($string);
-		
-		// Replace spaces with dashes
-		$slug = str_replace(' ', '-', $slug);
-		
-		// Remove special characters
-		$slug = preg_replace('/[^A-Za-z0-9\-]/', '', $slug);
-		
-		// Remove consecutive dashes
-		$slug = preg_replace('/-+/', '-', $slug);
-		
-		// Trim dashes from the beginning and end of the string
-		$slug = trim($slug, '-');
-		
-		return $slug;
+	public function fetch_cat($slug=''){
+		$q = $this->db->select('cate_id')->where('slug',$slug)->get('ec_category');
+		if($q->num_rows()>0){
+			return $q->row()->cate_id;
+		}
 	}
-	
-	 
+	public function fetch_product_search($params=[]){
+		 
+		if(isset($params['pro_name'])){
+			// $this->db->where(['pro_name'=>$params['pro_name']]);
+			$where = "pro_name LIKE '%".$params['pro_name']."%'";
+			$this->db->where($where); 
+		}
+		if(isset($params['pro_name'])&&isset($params['category'])){
+			$this->db->like(['category'=>$params['category']]);
+			$this->db->or_like(['sub_category'=>$params['category']]);
+		}
+		if(!isset($params['pro_name'])&&isset($params['category'])){
+			$this->db->like(['category'=>$params['category']]);
+			$this->db->or_like(['sub_category'=>$params['category']]);
+		}
+		$q = $this->db->get('ec_product');
+		if($q->num_rows()){
+			 return $q->result();
+			 //  echo $this->db->last_query();exit;
+		}
+		
+		return false;
+	}
+	public function fetch_product($cat_id=''){
+		
+			$this->db->where(['status'=>1]);
+			if($cat_id){
+				$this->db->like(['category'=>$cat_id,]);
+				$this->db->or_like(['sub_category'=>$cat_id,]);
+			}
+			$q = $this->db->get('ec_product');
+		if($q->num_rows()){
+			return $q->result();
+		}
+		return false;
+	} 
 }

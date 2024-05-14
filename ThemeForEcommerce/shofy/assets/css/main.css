@@ -20659,7 +20659,37 @@ product all slider
   border: 2px dashed rgba(0, 128, 128, 0.4);
   padding: 6px 30px;
   font-size: 15px;
-  color: #008080;
+  color: var(--tp-green-dark);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.tp-coupon-date-in-progress span {
+  display: inline-block;
+  background-color: var(--tp-pink-2);
+  border: 2px dashed rgba(0, 128, 128, 0.4);
+  padding: 6px 30px;
+  font-size: 15px;
+  /* color: var(--tp-pink-2); */
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.tp-coupon-date-on-the-way span {
+  display: inline-block;
+  background-color: rgba(0, 128, 128, 0.1);
+  border: 2px dashed rgba(0, 128, 128, 0.4);
+  padding: 6px 30px;
+  font-size: 15px;
+  color: var(--tp-green-dark);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.tp-coupon-date-compeleted span {
+  display: inline-block;
+  background-color: rgba(0, 128, 128, 0.1);
+  border: 2px dashed rgba(0, 128, 128, 0.4);
+  padding: 6px 30px;
+  font-size: 15px;
+  color: var(--tp-green-dark);
   font-weight: 600;
   letter-spacing: 1px;
 }

@@ -399,6 +399,12 @@
                                     <span>Product</span>
                                 </a> 
                             </li>
+                            <li>
+								<a href="order" class="waves-effect">
+                                    <i class="uim uim-airplay"></i> 
+                                    <span>Orders</span>
+                                </a> 
+                            </li>
                
  <!--
                             <li>

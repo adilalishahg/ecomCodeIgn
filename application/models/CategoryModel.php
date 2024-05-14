@@ -14,6 +14,7 @@ class CategoryModel extends CI_Model
 		try {
 			$post['added_on'] = date('d M, Y');
 			$post['cate_id'] = mt_rand(1111,9999);
+			$post['slug'] = generate_slug($_POST['cate_name']);
 			$q = $this->db->insert('ec_category',$post); 
 	
 			if($q) {

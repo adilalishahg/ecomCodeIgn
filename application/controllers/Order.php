@@ -1,19 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Cart extends MY_Controller {
+class Order extends MY_Controller {
 	
 	public function __construct() {
         parent::__construct();
         // Your initialization tasks or setup operations go here
         // For example, loading libraries, models, helpers, etc. 
-        $this->load->model('CartModel');
+        $this->load->model('OrderModel');
     }
 	public function index()
 	{ 
-		$data['cart']=get_from_cart();
-		$data['cart_total_data']=$this->cart_total;  
-		$this->load->view('front/cart',$data);
+		$data['orders']=$this->OrderModel->get_orders();
+		// debug($data);
+		$this->load->view('orders',$data);
 	} 
 	public function add_to_cart(){
 		$post = $this->input->post();
@@ -62,6 +62,30 @@ class Cart extends MY_Controller {
 		} 
 		echo json_encode(['msg'=>$msg,'status'=>$check,'msg_type'=>$msg_type]);
 		return;
+	}
+	public function order_track(){
+		if(isset($_POST['order_track_val'])){
+			$val = ($_POST['order_track_val']);
+			if (strpos($val, "order_") !== false) {
+				$val = str_replace("order_", "", $val); 
+			}
+			$order_detail = $this->OrderModel->order_track($val);
+			
+			if(!empty($order_detail[0])){
+				$order_detail[0]->found=true;
+			}else{
+				$order_detail[0]->found=false;
+			} 
+			$this->load->view('front/checkout_success',$order_detail[0]);
+		}else{
+
+			$data['cart_product']=$this->CartModel->get_cart();
+			$data['cart_total_price']=$this->CartModel->cart_total();  
+			// debug($data);	
+			$this->load->view('front/order_track',$data); 
+		}
+		// exit; 
+	 
 	}
 	
 	 

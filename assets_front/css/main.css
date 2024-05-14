@@ -242,6 +242,7 @@ li,
   --tp-pink-2: #FD2D6C;
   --tp-pink-3: #FF296A;
   --tp-pink-4: #FF3494;
+  --tp-pink-5: #ffdee8;
   --tp-green-dark: #115061;
   --tp-green-1: #31B757;
   --tp-khaki-1: #AB9774;
@@ -16771,6 +16772,7 @@ product all slider
     margin-left: 0;
   }
 }
+
 .tp-product-sm-section-title {
   position: relative;
   z-index: 1;
@@ -20655,13 +20657,44 @@ product all slider
 .tp-coupon-status:hover .tp-coupon-info-details span {
   color: #8E959B;
 }
+
 .tp-coupon-date span {
   display: inline-block;
   background-color: rgba(0, 128, 128, 0.1);
   border: 2px dashed rgba(0, 128, 128, 0.4);
   padding: 6px 30px;
   font-size: 15px;
-  color: #008080;
+  color: var(--tp-green-dark);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.tp-coupon-date-in-progress span {
+  display: inline-block;
+  background-color: var(--tp-pink-5);
+  border: 2px dashed rgba(0, 128, 128, 0.4);
+  padding: 6px 30px;
+  font-size: 15px;
+  color: var(--tp-common-white);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.tp-coupon-date-on-the-way span {
+  display: inline-block;
+  background-color: rgba(0, 128, 128, 0.1);
+  border: 2px dashed rgba(0, 128, 128, 0.4);
+  padding: 6px 30px;
+  font-size: 15px;
+  color: var(--tp-green-dark);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.tp-coupon-date-completed span {
+  display: inline-block;
+  background-color: rgba(0, 128, 128, 0.4);
+  border: 2px dashed rgba(0, 128, 128, 0.1);
+  padding: 6px 30px;
+  font-size: 15px;
+  color: var(--tp-green-dark);
   font-weight: 600;
   letter-spacing: 1px;
 }

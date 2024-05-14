@@ -341,7 +341,7 @@
 		var settings_html = `<div class="tp-theme-settings-area transition-3">
 		<div class="tp-theme-wrapper">
 		   <div class="tp-theme-header text-center">
-			  <h4 class="tp-theme-header-title">Harry Theme Settings</h4>
+			  <h4 class="tp-theme-header-title">Theme Settings</h4>
 		   </div>
 
 		   <!-- THEME TOGGLER -->
@@ -355,14 +355,7 @@
 		   </div>
 
 		   <!--  RTL SETTINGS -->
-		   <div class="tp-theme-dir mb-20">
-			  <label class="tp-theme-dir-main" for="tp-dir-toggler">
-				 <span class="tp-theme-dir-rtl"> RTL</span>
-					<input type="checkbox" id="tp-dir-toggler">
-					<i class="tp-theme-dir-slide"></i>
-				 <span class="tp-theme-dir-ltr active"> LTR</span>
-			  </label>
-		   </div>
+		 
 
 		   <!-- COLOR SETTINGS -->
 		   <div class="tp-theme-settings">
@@ -1700,7 +1693,41 @@
 	////////////////////////////////////////////////////
 	// 16. Wow Js
 	new WOW().init();
-
+	$(document).on('click', '.filter_ajax', function(event) {
+		event.preventDefault(); // Prevents the default action (page reload)
+		 
+		var catId = $(this).data('id'); // Access data-id attribute
+		var key = $(this).data('key'); // Access data-id attribute
+		// Add your custom functionality here
+		localStorage.setItem(key, catId);
+		 
+	  });
+	 
+	 
+		// Attach a click event listener to all checkboxes
+		$('#on_sale2').on('click', function() {
+		  // Check if the checkbox is checked
+		  if ($(this).is(':checked')) {
+			// Get the value of the checkbox
+			let checkboxValue = $(this).val();
+			localStorage.setItem('key', catId);
+			console.log('Checkbox is checked, value:', checkboxValue);
+		  } else {
+			console.log('Checkbox is not checked');
+		  }
+		});
+		// Attach a click event listener to all checkboxes
+		$('#in_stock2').on('click', function() {
+		  // Check if the checkbox is checked
+		  if ($(this).is(':checked')) {
+			// Get the value of the checkbox
+			let checkboxValue = $(this).val();
+			console.log('Checkbox is checked, value:', checkboxValue);
+		  } else {
+			console.log('Checkbox is not checked');
+		  }
+		});
+	   
 	function tp_ecommerce() {
 		$('.tp-cart-minus').on('click', function () {
 			var $input = $(this).parent().find('input');
@@ -1721,10 +1748,11 @@
 		$("#slider-range").slider({
 			range: true,
 			min: 0,
-			max: 500,
-			values: [75, 300],
+			max: 10000,
+			values: [75, 10000],
 			slide: function (event, ui) {
 				$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+				
 			}
 		});
 		$("#amount").val("$" + $("#slider-range").slider("values", 0) +
@@ -1733,10 +1761,11 @@
 		$("#slider-range-offcanvas").slider({
 			range: true,
 			min: 0,
-			max: 500,
-			values: [75, 300],
+			max: 10000,
+			values: [75, 10000],
 			slide: function (event, ui) {
 				$("#amount-offcanvas").val("$" + ui.values[0] + " - $" + ui.values[1]);
+				localStorage.setItem('tp_range', ui.values[0] + " - " + ui.values[1]);
 			}
 		});
 		$("#amount-offcanvas").val("$" + $("#slider-range-offcanvas").slider("values", 0) +

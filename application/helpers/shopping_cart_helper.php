@@ -21,5 +21,18 @@ function get_cart_total(){
     $result = $CI->CartModel->cart_total();
     return $result;
 }
+function get_category_nav(){
+	$CI =& get_instance();
+    $CI->load->model('HomeModel');
+    $result = $CI->HomeModel->get_category_nav();
+    return $result;
+}
+function get_categories_all(){
+	$CI =& get_instance();
+    $CI->load->model('HomeModel');
+    $result = $CI->HomeModel->get_categ();
+    return $result;
+}
+ 
 
 // Add more functions as needed

@@ -3,7 +3,7 @@ defined("BASEPATH") OR exit("No direct script allowed");
 
 
 
-class CartModel extends CI_Model
+class OrderModel extends CI_Model
 { 
 
     public function __construct() {
@@ -12,9 +12,42 @@ class CartModel extends CI_Model
         $this->load->database();
     }
 	
-	public function get_cart(){
+	public function get_orders(){
 		 
-		$exist = $this->db->where(array('user_id'=>get_userid($this->session),'status'=>1))->get('ec_cart');
+		$exist = $this->db->where(array('status'=>1))->get('ec_order');
+		if($exist->num_rows()){
+			return $exist->result();
+		}else{
+			return false;
+		}
+	}
+	public function get_order_detail($id=''){
+		 
+		$exist = $this->db->where(array('status'=>1,'order_id'=>$id))->get('ec_order');
+		if($exist->num_rows()){
+			return $exist->result();
+		}else{
+			return false;
+		}
+	}
+	public function order_track($search='',$limit=1){
+		if($search){
+			 
+			$this->db->where("(order_id = '$search' OR cust_email = '$search' OR cust_mobile = '$search')");
+
+		}
+		$this->db->order_by('order_date', 'asc');
+		$this->db->limit($limit);
+		$q = $this->db->get('ec_order');
+		// print_r($q);
+		if($q->num_rows()){ 
+			return $q->result();
+		}
+		return false;
+	}
+	public function track_order($val){
+		 
+		$exist = $this->db->where(array('status'=>1,'order_id'=>$id))->get('ec_order');
 		if($exist->num_rows()){
 			return $exist->result();
 		}else{
@@ -23,17 +56,9 @@ class CartModel extends CI_Model
 	}
 	public function add_to_cart($post){ 
 		$user_id = $this->session->userdata('user_id');
-		$exist = $this->db->where(array('user_id'=>get_userid($this->session),'pro_id'=>$post['pro_id'],'status'=>1))->get('ec_cart');
+		$exist = $this->db->where(array('user_id'=>get_userid($this->session),'pro_id'=>$post['pro_id']))->get('ec_cart');
 		if($exist->num_rows()){
-		    // return false;
-			$quantity =1;
-			if(isset($post['prod_qty'])){
-				$quantity = $post['prod_qty'];
-			}
-			$cart_already_product = $exist->row();
-			$data['pro_qty'] = $cart_already_product->pro_qty + $quantity;
-			$q = $this->db->where(["pro_id" => $cart_already_product->pro_id, "user_id" =>$cart_already_product->user_id])->update('ec_cart', ['pro_qty' => $data['pro_qty']]);
-			return true;
+		    return false;
 		}else{
 			$q = $this->db->select('pro_name,selling_price,mrp,slug,pro_main_image')->where('prod_id',$post['pro_id'])->get('ec_product');
 			if($q->num_rows()){
@@ -73,10 +98,9 @@ class CartModel extends CI_Model
 	}
 	public function cart_total(){
 		$res = false;
-		$q = $this->db->select('pro_price as total_price,pro_qty as total_item')->where(['user_id'=>get_userid($this->session)])->get('ec_cart');
+		$q = $this->db->select('pro_price as total_price,pro_qty as total_item')->where(['user_id'=>get_userid($this->session),'status'=>1])->get('ec_cart');
 		if($q->num_rows()){
-			
-			$result = ( $q->result()); 
+			$result = ( $q->result());
 			$total_charges =$total_item= 0;
 			foreach ($result as $res) {
 				// print_r($res);exit;
@@ -92,7 +116,8 @@ class CartModel extends CI_Model
 			}
 			 
 
-		}   
+		}  
+		// debug($res);
 		return $res;
 		 
 	}

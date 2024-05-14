@@ -14,15 +14,25 @@ class Home extends MY_Controller {
 	{
 		$data['banner'] = $this->HomeModel->get_banner();
 		$data['categ'] = $this->HomeModel->get_categ();
+		$data['categ_dash'] = $this->HomeModel->get_categ(4);
 		$data['products'] = $this->HomeModel->get_products(); 
+		// $data['get_category_nav'] = $this->HomeModel->get_category_nav(); 
 		// echo "<pre/>";
-		// print_r($data['cart_details']);exit;
+		// print_r($data);exit;
 		$this->load->view('front/index',$data);
 	}
 	
-	public function product_details($slug){
+	public function product_details($slug,$json=false){
+		// print_r($_POST);exit;
+		if(isset($_POST['json'])){
+			$json = $_POST['json'];
+			$slug = $_POST['slug'];
+		}
 		$data['arr'] = $this->HomeModel->product_details($slug);
 		// print_r($data['arr']);exit;
+		if($json){
+			echo json_encode($data['arr']);return;
+		} 
 		$this->load->view('front/product-details',$data);
 	}
 	 

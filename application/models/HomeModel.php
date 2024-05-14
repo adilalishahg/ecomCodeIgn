@@ -25,9 +25,9 @@ class HomeModel extends CI_Model
 			return false; // Return false indicating failure
 		}
 	}
-	public function get_categ(){
+	public function get_categ($limit=''){
 		try {
-			$q = $this->db->where('status','1')->order_by('id','asc')->get('ec_category');
+			$q = $this->db->where('status','1')->order_by('id','asc')->get('ec_category', $limit);
 			if($q->num_rows()) {
 				 
 				return $q->result();
@@ -71,6 +71,24 @@ class HomeModel extends CI_Model
 		} else {
 			return false;
 		}
+	}
+	public function get_category_nav($parent_id=''){
+		$q = $this->db->where(['status'=>1,"parent_id"=>$parent_id])->get('ec_category');
+		if($q->num_rows()) {
+			return $q->result();
+		} else {
+			return false;
+		}
+	}
+	public function get_subcat_check($cate_id){
+		$q = $this->db->where(['status'=>1,"parent_id"=>$cate_id])->get('ec_category');
+		// print_r($this->db->last_query());
+		if($q->num_rows()) {
+			return true;
+		} else {
+			return false;
+		}
+		 
 	}
 	 
 	
