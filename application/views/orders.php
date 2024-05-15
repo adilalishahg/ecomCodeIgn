@@ -34,6 +34,7 @@
 			<?php }?>
 			<div class="row">
 				<div class="col-xl-12">
+					<div class="alert col-xl-6"></div>
 					<div class="card">
 					<div class="card-body">
                                         <div class="row mb-2">
@@ -90,28 +91,16 @@
                                                         <td><?= $order->cust_email?></td>
                                                         <td><?= $order->cust_mobile?></td>
                                                         <td><?= $order->address.','.$order->city?></td>
-                                                        <td><?= ucfirst($order->order_status)?></td>
-                                                        <td>
-                                                            <ul class="list-inline mb-0">
-                                                                <li class="list-inline-item">
-                                                                    <a href="javascript:void(0);" class="px-2 text-primary"><i class="ri-pencil-line font-size-18"></i></a>
-                                                                </li>
-                                                                <li class="list-inline-item">
-                                                                    <a href="javascript:void(0);" class="px-2 text-danger"><i class="ri-delete-bin-line font-size-18"></i></a>
-                                                                </li>
-                                                                <!-- <li class="list-inline-item dropdown">
-                                                                    <a class="dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                                                                        <i class="ri-more-2-fill"></i>
-                                                                    </a>
-                                                                
-                                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                                        <a class="dropdown-item" href="#">Action</a>
-                                                                        <a class="dropdown-item" href="#">Another action</a>
-                                                                        <a class="dropdown-item" href="#">Something else here</a>
-                                                                    </div>
-                                                                </li> -->
-                                                            </ul>
-                                                        </td>
+                                                        <td style="    white-space: normal;"> 
+														<select class="form-select" name='status' id="floatingSelectGrid" style="width: auto;" onchange="change_order_status(<?=$order->id ?>,<?=$order->order_id ?>,this.value)">
+															<option selected value="">Select Status</option>
+															<option value="pending" <?php if($order->order_status=='pending'){echo "selected";} ?>>Pending</option>
+															<option value="on_the_way" <?php if($order->order_status=='on_the_way'){echo "selected";} ?>>On The Way</option> 
+															<option value="delivered" <?php if($order->order_status=='delivered'){echo "selected";} ?>>Delivered</option> 
+															<option value="returned" <?php if($order->order_status=='returned'){echo "selected";} ?>>Returned</option> 
+														</select> 
+													</td>
+                                                        
                                                     </tr>
 													<?php endforeach;endif;?>
                                                    </tbody>
@@ -143,7 +132,7 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-                                            </div>
+                                            </div> 
                                         </div>
                                     </div>
 					</div>
@@ -153,5 +142,51 @@
 		</div>
 		<!-- container-fluid -->
 	</div>
+	<script>
+		function change_order_status(id,order_id,st){
+			Swal.fire({
+					title: "Do you want to save the changes?", 
+					showCancelButton: true,
+					confirmButtonText: "Save" 
+				}).then((result) => {
+				/* Read more about isConfirmed, isDenied below */
+				if (result.isConfirmed) {
+					// Swal.fire("Saved!", "", "success");
+				
+				$.ajax({
+					url: "<?php echo base_url();?>order/change_order_status",
+					type: "POST",
+					data: {id:id,order_id:order_id,st:st},
+					success: function(data){
+						//alert(data);
+						let data1  = JSON.parse(data)
+						console.log(data1)
+						if(data1.status==1){   
+							if (data1.msg!== '') {
+								Swal.fire(data1.msg_alert, "", "success");
+								Toastify({
+									text: data1.msg,
+									className: "info",
+									style: {
+										background: "linear-gradient(to right, #00b09b, #96c93d)",
+									}
+								}).showToast(); 
+							} else {
+								Toastify({
+									text: 'Oops! An error occured and your message could not be sent.',
+									className: "info",
+									style: {
+										background: "linear-gradient(to right, #00b09b, #96c93d)",
+									}
+								}).showToast();  
+							}
+					
+						} 
+				}
+			})
+		}  
+	});
+	}
+	</script>
 	<!-- End Page-content -->
 	<?php $this->load->view('footer'); ?>

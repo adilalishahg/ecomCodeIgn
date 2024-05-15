@@ -136,6 +136,7 @@
 	<script src="assets_front/js/imagesloaded-pkgd.js"></script>
 	<script src="assets_front/js/ajax-form.js"></script>
 	<script src="assets_front/js/main.js"></script>
+	
 	<script>
 		
 $(function() {
