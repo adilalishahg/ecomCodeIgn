@@ -1702,31 +1702,20 @@
 		localStorage.setItem(key, catId);
 		 
 	  });
-	 
-	 
-		// Attach a click event listener to all checkboxes
-		$('#on_sale2').on('click', function() {
-		  // Check if the checkbox is checked
+	  $('.filter-items.filter-checkbox input[type="checkbox"]').on('change', function() {
+		let selectedValues = [];
+		let unselectedValues = [];
+		
+		$('.filter-items.filter-checkbox input[type="checkbox"]').each(function() {
 		  if ($(this).is(':checked')) {
-			// Get the value of the checkbox
-			let checkboxValue = $(this).val();
-			localStorage.setItem('key', catId);
-			console.log('Checkbox is checked, value:', checkboxValue);
+			selectedValues.push($(this).val());
 		  } else {
-			console.log('Checkbox is not checked');
+			unselectedValues.push($(this).val());
 		  }
 		});
-		// Attach a click event listener to all checkboxes
-		$('#in_stock2').on('click', function() {
-		  // Check if the checkbox is checked
-		  if ($(this).is(':checked')) {
-			// Get the value of the checkbox
-			let checkboxValue = $(this).val();
-			console.log('Checkbox is checked, value:', checkboxValue);
-		  } else {
-			console.log('Checkbox is not checked');
-		  }
-		});
+		localStorage.setItem('selected', selectedValues);
+		localStorage.setItem('un_selected', unselectedValues); 
+	  });
 	   
 	function tp_ecommerce() {
 		$('.tp-cart-minus').on('click', function () {

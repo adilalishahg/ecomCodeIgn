@@ -45,11 +45,11 @@
 						<div class="tp-shop-widget-checkbox">
 							<ul class="filter-items filter-checkbox">
 								<li class="filter-item checkbox">
-									<input id="on_sale2" type="checkbox" >
+									<input id="on_sale2" type="checkbox" value="on_sale">
 									<label for="on_sale2">On sale</label>
 								</li>
 								<li class="filter-item checkbox">
-									<input id="in_stock2" type="checkbox" >
+									<input id="in_stock2" type="checkbox" value="in_stock">
 									<label for="in_stock2">In Stock</label>
 								</li>
 							</ul><!-- .filter-items -->
