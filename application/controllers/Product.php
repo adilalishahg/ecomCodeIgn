@@ -121,4 +121,14 @@ class Product extends MY_Controller {
 
 		// print_r($search_array);exit;
 	}
+	public function filter_search_ajax(){
+		$params = $this->input->post()['search_array'];
+		// debug($params);
+		$search_array= [];
+		foreach ($params as $key => $value) {
+			echo "<pre/>";
+			 print_r($value);
+		} 
+		// print_r($search_array);exit;
+	}
 }

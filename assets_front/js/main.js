@@ -1697,9 +1697,12 @@
 		event.preventDefault(); // Prevents the default action (page reload)
 		 
 		var catId = $(this).data('id'); // Access data-id attribute
+		$(".filter_ajax").css("color","#55585B")
 		var key = $(this).data('key'); // Access data-id attribute
+		$(this).css('color', '#0989FF')
 		// Add your custom functionality here
 		localStorage.setItem(key, catId);
+		filter_search_ajax()
 		 
 	  });
 	  $('.filter-items.filter-checkbox input[type="checkbox"]').on('change', function() {
@@ -1715,8 +1718,48 @@
 		});
 		localStorage.setItem('selected', selectedValues);
 		localStorage.setItem('un_selected', unselectedValues); 
-	  });
-	   
+		filter_search_ajax()
+	  });	
+	function filter_search_ajax(){	
+		let selected =localStorage.getItem('selected')
+		let un_selected =localStorage.getItem('un_selected')
+		let categories =localStorage.getItem('categories')
+		let tp_range =localStorage.getItem('tp_range')
+		let search_array = []; 
+		if(selected){
+			let obj_select = { name: 'selected', values: selected };
+			search_array.push(obj_select)
+		}
+		if(un_selected){
+			let obj_un_selected = { name: 'un_selected', values: un_selected };
+			search_array.push(obj_un_selected)
+		}
+		if(categories){
+			let obj_categories = { name: 'categories', values: categories };
+			search_array.push(obj_categories)
+		}
+		if(selected){
+			let obj_range = { name: 'range', values: tp_range };
+			search_array.push(obj_range)
+		}
+		$.ajax({
+		    url: "products/filter_search_ajax",
+		    type: "POST",
+		    data: {
+				search_array: search_array 
+		    },
+		    success: function(response) {
+				$('.filter_ajax').css('color', '#55585B')
+				$('.filter_ajax').css('color', '#55585B')
+			},
+			error: function(response) {
+			    
+			},
+			complete: function(response) {
+			    
+			}
+		})
+	}
 	function tp_ecommerce() {
 		$('.tp-cart-minus').on('click', function () {
 			var $input = $(this).parent().find('input');
@@ -1754,7 +1797,10 @@
 			values: [75, 10000],
 			slide: function (event, ui) {
 				$("#amount-offcanvas").val("$" + ui.values[0] + " - $" + ui.values[1]);
-				localStorage.setItem('tp_range', ui.values[0] + " - " + ui.values[1]);
+				 
+			},
+			stop: function(event, ui) {
+				filter_search_ajax();
 			}
 		});
 		$("#amount-offcanvas").val("$" + $("#slider-range-offcanvas").slider("values", 0) +

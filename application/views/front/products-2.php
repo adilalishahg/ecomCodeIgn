@@ -18,7 +18,7 @@
 		<div class="tp-filter-offcanvas-wrapper">
 			<div class="tp-filter-offcanvas-close">
 				<button type="button" class="tp-filter-offcanvas-close-btn filter-close-btn">
-					<i class="fa-solid fa-xmark"></i>
+			 		<i class="fa-solid fa-xmark"></i>
 					Close
 				</button>
 			</div>
