@@ -370,7 +370,7 @@
 
                             <li>
                                 <a href="index.html" class="waves-effect">
-                                    <i class="uim uim-airplay"></i><span class="badge rounded-pill bg-success float-end">3</span>
+                                    <i class="uim uim-airplay"></i>
                                     <span>Dashboard</span>
                                 </a>
                             </li>
@@ -401,7 +401,7 @@
                             </li>
                             <li>
 								<a href="order" class="waves-effect">
-                                    <i class="uim uim-airplay"></i> 
+                                    <i class="uim uim-airplay"></i> <span class="badge rounded-pill bg-success float-end"><?php echo $get_pending_orders; ?></span>
                                     <span>Orders</span>
                                 </a> 
                             </li>

@@ -33,6 +33,12 @@ function get_categories_all(){
     $result = $CI->HomeModel->get_categ();
     return $result;
 }
+function get_pending_orders(){
+	$CI =& get_instance();
+    $CI->load->model('OrderModel');
+    $result = $CI->OrderModel->get_pending_orders();
+    return $result;
+}
  
 
 // Add more functions as needed

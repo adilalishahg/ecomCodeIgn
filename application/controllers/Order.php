@@ -87,6 +87,28 @@ class Order extends MY_Controller {
 		// exit; 
 	 
 	}
+	public function change_order_status(){
+		$where['id'] = $_POST['id'];
+		$where['order_id'] = $_POST['order_id'];
+		$array['order_status'] = $_POST['st'];
+		
+		 
+		$q = $this->OrderModel->order_status_change($array,$where);
+		if(strpos($_POST['st'], "_") !== false) {
+			$array['order_status'] = str_replace("_", " ", $_POST['st']); 
+		}
+		if($q){
+			$msg = 'Order status changed to '.$array['order_status'];
+			$check=1;
+			$msg_type='success';
+		}else{
+			$msg = 'Order status change failed to '.$array['order_status'];
+			$check=0;
+			$msg_type='error';
+		}
+		echo json_encode(['msg'=>$msg,'status'=>$check,'msg_type'=>$msg_type,'msg_alert'=>ucfirst($array['order_status'])]);
+		
+	}
 	
 	 
 

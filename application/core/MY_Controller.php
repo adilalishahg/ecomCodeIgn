@@ -4,6 +4,7 @@ class MY_Controller extends CI_Controller {
 	protected $cart_total; // Define $cart as a class property
 	protected $category_nav; // Define $cart as a class property
 	protected $get_categories_all; // Define $cart as a class property
+	protected $get_pending_orders; // Define $cart as a class property
 
     public function __construct() {
         parent::__construct();
@@ -14,6 +15,12 @@ class MY_Controller extends CI_Controller {
 		$this->cart_total  = get_cart_total();
 		$this->category_nav  = get_category_nav();
 		$this->get_categories_all  = get_categories_all();
+		if(get_pending_orders()){ 
+			$data['get_pending_orders'] = count(get_pending_orders());
+		}else{
+			$data['get_pending_orders']  =0;
+		}
+		 
 		if($this->session->userdata('user_id')=='')
 		{
 			$this->session->set_userdata('user_id',mt_rand(1111,9999));
@@ -37,6 +44,9 @@ class MY_Controller extends CI_Controller {
 
 			$data['get_categories_all'] = $this->get_categories_all;
 		}
+	 
+ 
+		 
 		// $data['total_charges'] = $this->total_charges;
 		// $data['total_item'] = $this->total_item;
 		// debug($data); 

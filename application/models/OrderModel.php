@@ -21,6 +21,17 @@ class OrderModel extends CI_Model
 			return false;
 		}
 	}
+	public function get_pending_orders(){
+		 
+		$exist = $this->db->where(array('status'=>1,'order_status'=>'pending'))->get('ec_order');
+		if($exist->num_rows()){ 
+			return $exist->result();
+		}else{
+			
+			return false;
+		}
+		 
+	}
 	public function get_order_detail($id=''){
 		 
 		$exist = $this->db->where(array('status'=>1,'order_id'=>$id))->get('ec_order');
@@ -30,6 +41,9 @@ class OrderModel extends CI_Model
 			return false;
 		}
 	}
+	public function order_status_change($array=[],$where=[]){
+			return $this->db->where($where)->update('ec_order', $array);
+		}
 	public function order_track($search='',$limit=1){
 		if($search){
 			 
